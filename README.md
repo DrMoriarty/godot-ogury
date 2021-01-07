@@ -1,11 +1,3 @@
-# godot-ogury
+# Ogury plugin for Godot engine.
 
-Ogury plugin for godot engine. You need godot version 3.2.2.beta or higher.
-
-## Android usage
-
-Copy `Ogury.gdap` to `android/plugins`. Then enable plugin `Ogury` in export settings.
-
-## iOS usage
-
-Coming soon...
+Use [NativeLib Addon](https://github.com/DrMoriarty/nativelib) or [NativeLib-CLI](https://github.com/DrMoriarty/nativelib-cli) for installation.
