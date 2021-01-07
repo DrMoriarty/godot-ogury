@@ -1,11 +1,11 @@
 [config]
 
 name="Ogury"
-binary_type="remote"
-binary="ru.mobilap.godot:godot-ogury:+"
+binary_type="local"
+binary="Ogury.release.aar"
 
 [dependencies]
 
 local=[]
-remote=[]
+remote=["co.ogury:ogury-sdk:4.+"]
 custom_maven_repos=["https://dl.bintray.com/mobilap/maven/", "https://maven.ogury.co"]

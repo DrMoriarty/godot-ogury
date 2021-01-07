@@ -1,0 +1,26 @@
+{
+  "name": "ogury",
+  "description": "Ogury Choice Manager plugin. GDPR and CCPA consent solution.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "url": "https://github.com/DrMoriarty/godot-ogury",
+  "dependencies": [
+  ],
+  "files": {
+    "scripts": "scripts"
+  },
+  "variables": {
+    "Ogury/AssetKey": {
+      "info": "Set your Asset Key here"
+    }
+  },
+  "autoload": {
+    "ogury": "*res://scripts/ogury.gd"
+  },
+  "platform_android": {
+    "files": {
+      "android-plugin/Ogury.gdap": "android/plugins/",
+      "android-plugin/build/outputs/aar/Ogury.release.aar": "android/plugins/"
+    }
+  }
+}
