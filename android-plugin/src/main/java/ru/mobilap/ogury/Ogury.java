@@ -37,7 +37,6 @@ public class Ogury extends GodotPlugin
 {
 
     private final String TAG = Ogury.class.getName();
-    private Activity activity = null; // The main activity of the game
     private boolean _inited = false;
 
     /*
@@ -64,12 +63,12 @@ public class Ogury extends GodotPlugin
     public void init(final String _assetKey, final boolean _productionMode) {
         this.ProductionMode = _productionMode;
         this.assetKey = _assetKey;
-        layout = (FrameLayout)activity.getWindow().getDecorView().getRootView();
-        activity.runOnUiThread(new Runnable() {
+        layout = (FrameLayout)getActivity().getWindow().getDecorView().getRootView();
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     Log.w(TAG, "Init with " + _assetKey);
-                    OguryChoiceManager.initialize(activity, _assetKey, new OguryCmConfig());
-                    OguryChoiceManager.ask(activity, getConsentListener(0, ""));
+                    OguryChoiceManager.initialize(getActivity(), _assetKey, new OguryCmConfig());
+                    OguryChoiceManager.ask(getActivity(), getConsentListener(0, ""));
                 }
             });
     }
@@ -77,26 +76,26 @@ public class Ogury extends GodotPlugin
     public void initWithCallback(final String _assetKey, final boolean _productionMode, final int callback_id, final String callback_method) {
         this.ProductionMode = _productionMode;
         this.assetKey = _assetKey;
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     Log.w(TAG, "Init with " + _assetKey);
-                    OguryChoiceManager.initialize(activity, _assetKey, new OguryCmConfig());
-                    OguryChoiceManager.ask(activity, getConsentListener(callback_id, callback_method));
+                    OguryChoiceManager.initialize(getActivity(), _assetKey, new OguryCmConfig());
+                    OguryChoiceManager.ask(getActivity(), getConsentListener(callback_id, callback_method));
                 }
             });
     }
 
     private void startSdk() {
         // start the Ogury SDK
-        Presage.getInstance().start(assetKey, activity);
+        Presage.getInstance().start(assetKey, getActivity());
         _inited = true;
     }
 
     public void editConsent(final int callback_id, final String callback_method) {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(OguryChoiceManager.isEditAvailable()) {
-                        OguryChoiceManager.edit(activity, getConsentListener(callback_id, callback_method));
+                        OguryChoiceManager.edit(getActivity(), getConsentListener(callback_id, callback_method));
                     } else if(callback_id > 0) {
                         GodotLib.calldeferred(callback_id, callback_method, new Object[] { false, false, "" });
                     }
@@ -203,7 +202,7 @@ public class Ogury extends GodotPlugin
      */
     /*
     public void loadRewardedVideo(final String id, final int callback_id) {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(_inited) {
                         if(!rewardeds.containsKey(id)) {
@@ -227,7 +226,7 @@ public class Ogury extends GodotPlugin
      */
     /*
     public void showRewardedVideo(final String id) {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(rewardeds.containsKey(id) && sdk.isRewardedVideoReady(activity, id)) {
                         TMAdListener listener = rewardeds.get(id);
@@ -308,7 +307,7 @@ public class Ogury extends GodotPlugin
     /*
     public void loadBanner(final String id, final boolean isOnTop, final int callback_id)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(_inited) {
                         if(!banners.containsKey(id)) {
@@ -332,7 +331,7 @@ public class Ogury extends GodotPlugin
     /*
     public void showBanner(final String id)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(banners.containsKey(id)) {
                         TMBannerAdView b = banners.get(id);
@@ -356,7 +355,7 @@ public class Ogury extends GodotPlugin
 
     public void removeBanner(final String id)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(banners.containsKey(id)) {
                         TMBannerAdView b = banners.get(id);
@@ -377,7 +376,7 @@ public class Ogury extends GodotPlugin
     /*
     public void hideBanner(final String id)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(banners.containsKey(id)) {
                         TMBannerAdView b = banners.get(id);
@@ -402,7 +401,7 @@ public class Ogury extends GodotPlugin
             TMBannerAdView b = banners.get(id);
             int w = b.getWidth();
             if(w == 0) {
-                Resources r = activity.getResources();
+                Resources r = getActivity().getResources();
                 w = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, b.getSize().width, r.getDisplayMetrics());
             }
             return w;
@@ -423,7 +422,7 @@ public class Ogury extends GodotPlugin
             TMBannerAdView b = banners.get(id);
             int h = b.getHeight();
             if(h == 0) {
-                Resources r = activity.getResources();
+                Resources r = getActivity().getResources();
                 h = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, b.getSize().height, r.getDisplayMetrics());
             }
             return h;
@@ -449,7 +448,7 @@ public class Ogury extends GodotPlugin
 
     public void killZombieBanner(final String zid)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if (zombieBanners.containsKey(zid)) {
                         View z = zombieBanners.get(zid);
@@ -508,7 +507,7 @@ public class Ogury extends GodotPlugin
     /*
     public void loadInterstitial(final String id, final int callback_id)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(_inited) {
                         if(!interstitials.containsKey(id)) {
@@ -528,7 +527,7 @@ public class Ogury extends GodotPlugin
 
     public void loadVideoInterstitial(final String id, final int callback_id)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if(_inited) {
                         TMAdListener listener = makeInterstitialListener(id, callback_id);
@@ -549,7 +548,7 @@ public class Ogury extends GodotPlugin
     /*
     public void showInterstitial(final String id)
     {
-        activity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     if (interstitials.containsKey(id)) {
                         InterstitialWrapper interstitial = interstitials.get(id);
@@ -577,7 +576,6 @@ public class Ogury extends GodotPlugin
     public Ogury(Godot godot) 
     {
         super(godot);
-        activity = godot;
     }
 
     @Override
