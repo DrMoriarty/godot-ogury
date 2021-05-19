@@ -1,11 +1,17 @@
 {
   "name": "ogury",
+  "display_name": "Ogury",
   "description": "Ogury Choice Manager plugin. GDPR and CCPA consent solution.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "url": "https://github.com/DrMoriarty/godot-ogury",
-  "dependencies": [
-  ],
+  "godot_version": "3.3.0",
+  "category": "misc",
+  "author": {
+    "name": "DrMoriarty",
+    "url": "https://github.com/DrMoriarty",
+    "donate": "https://ko-fi.com/drmoriarty"
+  },
   "files": {
     "scripts": "scripts"
   },
